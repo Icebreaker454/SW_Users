@@ -1,0 +1,14 @@
+#content {
+  padding-top: 80px;
+}
+
+#users_table {
+  margin-top: 20px;
+}
+
+.status-active {
+  color: green;
+}
+.status-inactive {
+  color: red;
+}

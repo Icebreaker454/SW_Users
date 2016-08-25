@@ -15,13 +15,20 @@ class DBWrapper(object):
             if self._conn:
                 self._conn.close()
 
-    def list_users(self):
+    def format_users(self, raw_data):
+        return [{
+            'id': x[0],
+            'name': x[1],
+            'email': x[2],
+            'active': x[3]} for x in raw_data]
+
+    def get_all_users(self):
         self._cur.callproc('getallusers')
-        return self._cur.fetchall()
+        return self.format_users(self._cur.fetchall())
 
     def get_users_by_name(self, name):
         self._cur.callproc('getusersbyname', (name, ))
-        return self._cur.fetchall()
+        return self.format_users(self._cur.fetchall())
 
     def __del__(self):
         self._conn.close()
