@@ -1,4 +1,10 @@
+Babel==2.3.4
 Django==1.10
+django-bootstrap-form==3.2.1
 django-bootstrap-pagination==1.6.2
+django-crispy-forms==1.6.0
+django-phonenumber-field==1.1.0
+phonenumberslite==7.5.2
 psycopg2==2.6.2
+pytz==2016.6.1
 wheel==0.24.0

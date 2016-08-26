@@ -20,15 +20,22 @@ class DBWrapper(object):
             'id': x[0],
             'name': x[1],
             'email': x[2],
-            'active': x[3]} for x in raw_data]
+            'phone': x[3],
+            'mobile': x[4],
+            'active': x[5]} for x in raw_data]
 
     def get_all_users(self):
         self._cur.callproc('getallusers')
         return self.format_users(self._cur.fetchall())
 
     def get_users_by_name(self, name):
-        self._cur.callproc('getusersbyname', (name, ))
+        self._cur.callproc('searchusersbyname', (name, ))
         return self.format_users(self._cur.fetchall())
+
+    def add_user(self, name, email, status=False, phone=None, mobile=None):
+        self._cur.callproc(
+            'adduser', [name, email, status, phone, mobile])
+        self._conn.commit()
 
     def __del__(self):
         self._conn.close()

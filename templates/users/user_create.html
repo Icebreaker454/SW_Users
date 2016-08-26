@@ -1,0 +1,22 @@
+{% extends "_layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h2>
+    <a href="{% url 'user_list' %}" class="btn btn-primary">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <span>
+      {% block sub_header %}
+        Create a user
+      {% endblock %}
+    </span>
+  </h2>
+
+  <form class="" action="{{ form.action }}" method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit" class="pull-right btn btn-primary">Create</button>
+  </form>
+{% endblock %}

@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.core.paginator import Paginator
-from django.views.generic import TemplateView
+from django.core.urlresolvers import reverse
+from django.views import generic
 
 from data_access import DBWrapper
+from apps.users.forms import UserForm
 
 
-class UserListView(TemplateView):
+class UserListView(generic.TemplateView):
 
     template_name = 'users/user_list.html'
 
@@ -39,3 +41,17 @@ class UserListView(TemplateView):
             'page': page,
         })
         return ctx
+
+
+class UserCreateView(generic.FormView):
+
+    form_class = UserForm
+    template_name = 'users/user_create.html'
+
+    def get_success_url(self):
+        return reverse('user_list')
+
+    def form_valid(self, form, *args, **kwargs):
+        wrapper = DBWrapper(**settings.DB_DATA)
+        wrapper.add_user(**form.cleaned_data)
+        return super(UserCreateView, self).form_valid(form, *args, **kwargs)
